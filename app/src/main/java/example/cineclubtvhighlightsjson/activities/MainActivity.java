@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import java.util.List;
 
 import example.cineclubtvhighlightsjson.R;
-import example.cineclubtvhighlightsjson.entities.TVHighlight;
+import example.cineclubtvhighlightsjson.entities.TvHighlight;
 import example.cineclubtvhighlightsjson.functional.Consumer;
 import example.cineclubtvhighlightsjson.functional.RecycleViewAdapter;
 import example.cineclubtvhighlightsjson.ui.fragments.RetainFragment;
@@ -28,9 +28,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupNetworkFragment() {
 
-        getRetainFragment().getTVHighlights(new Consumer<List<TVHighlight>>() {
+        getRetainFragment().getTVHighlights(new Consumer<List<TvHighlight>>() {
             @Override
-            public void apply(List<TVHighlight> tvHighlights) {
+            public void apply(List<TvHighlight> tvHighlights) {
                 setupRecyclerView(tvHighlights);
             }
         });
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         return retainFragment;
     }
 
-    private void setupRecyclerView(List<TVHighlight> tvHighlights){
+    private void setupRecyclerView(List<TvHighlight> tvHighlights){
 
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
 

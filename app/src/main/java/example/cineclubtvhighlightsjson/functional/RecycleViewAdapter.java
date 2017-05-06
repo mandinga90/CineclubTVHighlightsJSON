@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -12,14 +13,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 import example.cineclubtvhighlightsjson.R;
-import example.cineclubtvhighlightsjson.entities.TVHighlight;
+import example.cineclubtvhighlightsjson.entities.TvHighlight;
 
 /**
  * Created by mlu on 06.05.2017.
  */
 
 public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHolder>{
-    private List<TVHighlight> tvHighlights = new LinkedList<>();
+    private List<TvHighlight> tvHighlights = new LinkedList<>();
     private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
     // Provide a reference to the views for each data item
@@ -29,21 +30,23 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         public TextView title;
         public TextView originalTitle;
         public TextView time;
+        public ImageView tvChannelIcon;
         public ViewHolder(View v) {
             super(v);
             title = (TextView) v.findViewById(R.id.tv_highlight_title);
             originalTitle = (TextView) v.findViewById(R.id.tv_highlight_original_title);
             time = (TextView) v.findViewById(R.id.tv_highlight_time);
+            tvChannelIcon = (ImageView) v.findViewById(R.id.tv_channel_icon);
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public RecycleViewAdapter(List<TVHighlight> tvHighlights) {
+    public RecycleViewAdapter(List<TvHighlight> tvHighlights) {
         for(int i = 0; i < tvHighlights.size(); i++){
-            TVHighlight currentTVHighlight = tvHighlights.get(i);
-            boolean condition = DateTimeHelper.isToday(currentTVHighlight.getDateTime());
+            TvHighlight currentTvHighlight = tvHighlights.get(i);
+            boolean condition = DateTimeHelper.isToday(currentTvHighlight.getDateTime());
             if(condition){
-                this.tvHighlights.add( currentTVHighlight );
+                this.tvHighlights.add(currentTvHighlight);
             }
         }
     }
@@ -65,15 +68,15 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        TVHighlight currentTVHighlight = tvHighlights.get(position);
+        TvHighlight currentTvHighlight = tvHighlights.get(position);
 
         // title
-        holder.title.setText(currentTVHighlight.getTitle());
+        holder.title.setText(currentTvHighlight.getTitle());
 
         // original title
-        if(    ! currentTVHighlight.getOriginalTitle().isEmpty()
-            && ! currentTVHighlight.getOriginalTitle().equals(currentTVHighlight.getTitle()) ){
-            holder.originalTitle.setText("aka '" + currentTVHighlight.getOriginalTitle() + "'");
+        if(    ! currentTvHighlight.getOriginalTitle().isEmpty()
+            && ! currentTvHighlight.getOriginalTitle().equals(currentTvHighlight.getTitle()) ){
+            holder.originalTitle.setText("aka '" + currentTvHighlight.getOriginalTitle() + "'");
             holder.originalTitle.setVisibility(View.VISIBLE);
         }
         else{
@@ -81,9 +84,14 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         }
 
         // dateTime
-        Calendar dateTime = currentTVHighlight.getDateTime();
+        Calendar dateTime = currentTvHighlight.getDateTime();
         holder.time.setText( timeFormat.format( dateTime.getTime() ) );
-        // dateTime.get( Calendar.HOUR_OF_DAY ) + ":" + dateTime.get( Calendar.MINUTE )
+
+        // tv channel icon
+        int tvChannelIcon = currentTvHighlight.getTvChannelIcon();
+        if( tvChannelIcon > 0 ){
+            holder.tvChannelIcon.setBackgroundResource(tvChannelIcon);
+        }
 
     }
 

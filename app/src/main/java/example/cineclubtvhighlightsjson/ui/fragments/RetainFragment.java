@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import example.cineclubtvhighlightsjson.entities.TVHighlight;
+import example.cineclubtvhighlightsjson.entities.TvHighlight;
 import example.cineclubtvhighlightsjson.functional.Consumer;
 import example.cineclubtvhighlightsjson.http.RestClient;
 import example.cineclubtvhighlightsjson.http.TVHighlightService;
@@ -19,7 +19,7 @@ import retrofit2.Response;
 public class RetainFragment extends Fragment {
 
     private TVHighlightService service = RestClient.getInstance().createService(TVHighlightService.class);
-    private List<TVHighlight> tvHighlights;
+    private List<TvHighlight> tvHighlights;
     private Consumer getConsumer;
 
     @Override
@@ -28,13 +28,13 @@ public class RetainFragment extends Fragment {
         setRetainInstance(true);
     }
 
-    public void getTVHighlights(final Consumer<List<TVHighlight>> consumer) {
+    public void getTVHighlights(final Consumer<List<TvHighlight>> consumer) {
         getConsumer = consumer;
         if (tvHighlights == null) {
-            Call<List<TVHighlight>> call = service.getTVHighlights();
-            call.enqueue(new Callback<List<TVHighlight>>() {
+            Call<List<TvHighlight>> call = service.getTVHighlights();
+            call.enqueue(new Callback<List<TvHighlight>>() {
                 @Override
-                public void onResponse(Call<List<TVHighlight>> call, Response<List<TVHighlight>> response) {
+                public void onResponse(Call<List<TvHighlight>> call, Response<List<TvHighlight>> response) {
                     if (response.isSuccessful()) {
                         tvHighlights = response.body();
                         getConsumer.apply(tvHighlights);
@@ -44,7 +44,7 @@ public class RetainFragment extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<List<TVHighlight>> call, Throwable t) {
+                public void onFailure(Call<List<TvHighlight>> call, Throwable t) {
                     showNetError(t.getMessage());
                 }
             });
