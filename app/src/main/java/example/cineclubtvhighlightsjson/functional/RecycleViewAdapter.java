@@ -31,12 +31,14 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         public TextView originalTitle;
         public TextView time;
         public ImageView tvChannelIcon;
+        public TextView advertisingInMinutes;
         public ViewHolder(View v) {
             super(v);
             title = (TextView) v.findViewById(R.id.tv_highlight_title);
             originalTitle = (TextView) v.findViewById(R.id.tv_highlight_original_title);
             time = (TextView) v.findViewById(R.id.tv_highlight_time);
             tvChannelIcon = (ImageView) v.findViewById(R.id.tv_channel_icon);
+            advertisingInMinutes = (TextView) v.findViewById(R.id.tv_highlight_advertising_in_minutes);
         }
     }
 
@@ -100,6 +102,20 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         if( tvChannelIcon > 0 ){
             holder.tvChannelIcon.setBackgroundResource(tvChannelIcon);
         }
+
+        // advertising in minutes
+        int advertisingInMinutes = currentTvHighlight.getAdvertisingInMinutes();
+        StringBuilder advertisingInMinutesTextBuilder = new StringBuilder();
+        if( advertisingInMinutes > 0 ){
+            advertisingInMinutesTextBuilder.append(advertisingInMinutes);
+            advertisingInMinutesTextBuilder.append(" Min. ");
+            // Min. Werbung
+        }
+        else{
+            advertisingInMinutesTextBuilder.append("Keine ");
+        }
+        advertisingInMinutesTextBuilder.append("Werbung");
+        holder.advertisingInMinutes.setText(advertisingInMinutesTextBuilder.toString());
 
     }
 

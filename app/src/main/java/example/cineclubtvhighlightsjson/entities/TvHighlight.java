@@ -38,8 +38,8 @@ public class TvHighlight {
         tvChannelIcons.put("One", R.drawable.ic_channel_one );
         tvChannelIcons.put("Phönix", R.drawable.ic_channel_phoenix );
         tvChannelIcons.put("Pro 7", R.drawable.ic_channel_prosieben );
-        tvChannelIcons.put("Pro 7 MAXX", R.drawable.ic_channel_prosieben_maxx );
         tvChannelIcons.put("Pro7", R.drawable.ic_channel_prosieben );
+        tvChannelIcons.put("Pro 7 MAXX", R.drawable.ic_channel_prosieben_maxx );
         tvChannelIcons.put("Pro7 Maxx", R.drawable.ic_channel_prosieben_maxx );
         tvChannelIcons.put("RBB", R.drawable.ic_channel_rbb );
         tvChannelIcons.put("RTL", R.drawable.ic_channel_rtl );
