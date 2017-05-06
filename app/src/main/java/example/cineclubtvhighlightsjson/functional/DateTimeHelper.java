@@ -14,6 +14,9 @@ import java.util.GregorianCalendar;
  */
 
 public class DateTimeHelper {
+
+    public static final Date EMPTY_DATE = parseJSONDateTime("1970-01-01T00:00:00.000Z");
+
     public static Date parseJSONDateTime(String dateString) {
         if (dateString == null) return null;
         DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
@@ -35,5 +38,9 @@ public class DateTimeHelper {
         return (    date.get( Calendar.YEAR ) == today.get( Calendar.YEAR )
                  && date.get( Calendar.MONTH ) == today.get( Calendar.MONTH )
                  && date.get( Calendar.DAY_OF_MONTH ) == today.get( Calendar.DAY_OF_MONTH ) );
+    }
+
+    public static boolean isEmptyDate(Date date) {
+        return date.compareTo( DateTimeHelper.EMPTY_DATE ) <= 0;
     }
 }

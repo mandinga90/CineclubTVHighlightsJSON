@@ -107,12 +107,16 @@ public class TvHighlight {
         }
     }
 
-    public String getStartDate() {
-        return startDate;
-    }
-
-    public String getStartTyp() {
-        return startTyp;
+    public Calendar getReleaseYear(){
+        Date date = DateTimeHelper.parseJSONDateTime(startDate);
+        if( ! DateTimeHelper.isEmptyDate( date ) ){
+            Calendar cal = GregorianCalendar.getInstance();
+            cal.setTime(date);
+            return cal;
+        }
+        else{
+            return null;
+        }
     }
 
     public int getAdvertisingInMinutes() {

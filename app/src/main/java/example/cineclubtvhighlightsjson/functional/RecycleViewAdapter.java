@@ -71,7 +71,15 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         TvHighlight currentTvHighlight = tvHighlights.get(position);
 
         // title
-        holder.title.setText(currentTvHighlight.getTitle());
+        String title = "";
+        title = currentTvHighlight.getTitle();
+
+        // release year
+        if( currentTvHighlight.getReleaseYear() != null ){
+            int releaseYear = currentTvHighlight.getReleaseYear().get( Calendar.YEAR );
+            title += " (" + releaseYear + ")";
+        }
+        holder.title.setText( title );
 
         // original title
         if(    ! currentTvHighlight.getOriginalTitle().isEmpty()
