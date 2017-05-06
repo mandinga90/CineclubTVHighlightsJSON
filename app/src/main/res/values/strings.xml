@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Cineclub TV Highlights</string>
+    <string name="NETWORK_FRAGMENT_TAG">NETWORK_FRAGMENT</string>
+</resources>
