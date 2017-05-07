@@ -17,6 +17,9 @@ import example.cineclubtvhighlightsjson.entities.TvHighlight;
 
 /**
  * Created by mlu on 06.05.2017.
+ * sources:
+ * https://developer.android.com/guide/topics/ui/layout/recyclerview.html
+ * http://www.androidhive.info/2016/01/android-working-with-recycler-view/
  */
 
 public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHolder>{
@@ -32,13 +35,15 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         public TextView time;
         public ImageView tvChannelIcon;
         public TextView advertisingInMinutes;
+        public ImageView cover;
         public ViewHolder(View v) {
             super(v);
             title = (TextView) v.findViewById(R.id.tv_highlight_title);
             originalTitle = (TextView) v.findViewById(R.id.tv_highlight_original_title);
             time = (TextView) v.findViewById(R.id.tv_highlight_time);
-            tvChannelIcon = (ImageView) v.findViewById(R.id.tv_channel_icon);
+            tvChannelIcon = (ImageView) v.findViewById(R.id.tv_highlight_channel_icon);
             advertisingInMinutes = (TextView) v.findViewById(R.id.tv_highlight_advertising_in_minutes);
+            cover = (ImageView) v.findViewById(R.id.tv_highlight_cover);
         }
     }
 
@@ -59,7 +64,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
                                                    int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.tv_highlight_list, parent, false);
+                .inflate(R.layout.constraint_tv_highlight_list, parent, false);
 
         ViewHolder vh = new ViewHolder(v);
         return vh;
@@ -100,7 +105,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         // tv channel icon
         int tvChannelIcon = currentTvHighlight.getTvChannelIcon();
         if( tvChannelIcon > 0 ){
-            holder.tvChannelIcon.setBackgroundResource(tvChannelIcon);
+            holder.tvChannelIcon.setImageResource(tvChannelIcon);
         }
 
         // advertising in minutes
@@ -109,13 +114,15 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         if( advertisingInMinutes > 0 ){
             advertisingInMinutesTextBuilder.append(advertisingInMinutes);
             advertisingInMinutesTextBuilder.append(" Min. ");
-            // Min. Werbung
         }
         else{
             advertisingInMinutesTextBuilder.append("Keine ");
         }
         advertisingInMinutesTextBuilder.append("Werbung");
         holder.advertisingInMinutes.setText(advertisingInMinutesTextBuilder.toString());
+
+        // cover
+        currentTvHighlight.setCoverImage(holder.cover);
 
     }
 

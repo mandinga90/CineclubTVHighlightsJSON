@@ -1,5 +1,7 @@
 package example.cineclubtvhighlightsjson.entities;
 
+import android.widget.ImageView;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -8,6 +10,7 @@ import java.util.Map;
 
 import example.cineclubtvhighlightsjson.R;
 import example.cineclubtvhighlightsjson.functional.DateTimeHelper;
+import example.cineclubtvhighlightsjson.functional.DownloadImageTask;
 
 /**
  * Created by mlu on 05.05.2017.
@@ -90,7 +93,9 @@ public class TvHighlight {
         return cal;
     }
 
-    public String getTitle() {
+    public String getTitle(){
+//        byte spbyte[] = title.getBytes("UTF-8");
+//        return new String( spbyte,"UTF-8");
         return title;
     }
 
@@ -123,12 +128,12 @@ public class TvHighlight {
         return advertisingInMinutes;
     }
 
-    public String getLink() {
-        return link;
+    public void setCoverImage(ImageView imageView){
+        new DownloadImageTask(imageView).execute(imageLink);
     }
 
-    public String getImageLink() {
-        return imageLink;
+    public String getLink() {
+        return link;
     }
 
     public String getGenre1() {
