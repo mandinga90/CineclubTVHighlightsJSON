@@ -1,7 +1,5 @@
 package example.cineclubtvhighlightsjson.http;
 
-import android.util.Base64;
-
 import java.io.IOException;
 
 import okhttp3.Interceptor;
@@ -13,13 +11,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RestClient {
     private static final String URL = "http://www.cineclub.de";
-//    private static final String URL = "http://www.cineclub.de";
-    private static final String USERNAME = "redaktion@cineclub.de";
-    private static final String PASSWORD = "apfelbaum";
+//    private static final String USERNAME = "redaktion@cineclub.de";
+//    private static final String PASSWORD = "apfelbaum";
     private static final RestClient ourInstance = new RestClient();
-    private static final String AUTHORIZATION_KEY = "Authorization";
-    private static final String ACCEPT_KEY = "Accept";
-//    private static final String APPLICATION_JSON_VALUE = "application/json";
+    //    private static final String AUTHORIZATION_KEY = "Authorization";
 
     private OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
     private Retrofit.Builder builder = new Retrofit.Builder()
@@ -34,17 +29,16 @@ public class RestClient {
     }
 
     public <S> S createService(Class<S> serviceClass) {
-        final String credentials = USERNAME + ":" + PASSWORD;
-        final String basic = "Basic " + Base64.encodeToString(credentials.getBytes(),
-                Base64.NO_WRAP);
+//        final String credentials = USERNAME + ":" + PASSWORD;
+//        final String basic = "Basic " + Base64.encodeToString(credentials.getBytes(),
+//                Base64.NO_WRAP);
 
         httpClient.addInterceptor(new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request original = chain.request();
                 Request.Builder reqBuilder = original.newBuilder()
-                        .header(AUTHORIZATION_KEY, basic)
-//                        .header(ACCEPT_KEY, APPLICATION_JSON_VALUE)
+//                        .header(AUTHORIZATION_KEY, basic)
                         .method(original.method(), original.body());
 
                 Request request = reqBuilder.build();

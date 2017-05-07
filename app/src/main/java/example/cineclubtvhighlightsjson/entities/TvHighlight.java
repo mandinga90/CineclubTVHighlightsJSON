@@ -2,6 +2,7 @@ package example.cineclubtvhighlightsjson.entities;
 
 import android.widget.ImageView;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -93,10 +94,10 @@ public class TvHighlight {
         return cal;
     }
 
-    public String getTitle(){
-//        byte spbyte[] = title.getBytes("UTF-8");
-//        return new String( spbyte,"UTF-8");
-        return title;
+    public String getTitle() throws UnsupportedEncodingException {
+        byte spbyte[] = title.getBytes("UTF-16");
+        return new String( spbyte,"UTF-16");
+//        return title;
     }
 
     public String getOriginalTitle() {

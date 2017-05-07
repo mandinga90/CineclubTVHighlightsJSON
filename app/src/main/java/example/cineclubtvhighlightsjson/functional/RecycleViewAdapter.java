@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.LinkedList;
@@ -79,18 +80,23 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
 
         // title
         String title = "";
-        title = currentTvHighlight.getTitle();
+        try {
+            title = currentTvHighlight.getTitle();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
         // release year
+        String titleSuffix = "";
         if( currentTvHighlight.getReleaseYear() != null ){
             int releaseYear = currentTvHighlight.getReleaseYear().get( Calendar.YEAR );
-            title += " (" + releaseYear + ")";
+            titleSuffix = " (" + releaseYear + ")";
         }
-        holder.title.setText( title );
+        holder.title.setText( title + titleSuffix );
 
         // original title
         if(    ! currentTvHighlight.getOriginalTitle().isEmpty()
-            && ! currentTvHighlight.getOriginalTitle().equals(currentTvHighlight.getTitle()) ){
+            && ! currentTvHighlight.getOriginalTitle().equals(title) ){
             holder.originalTitle.setText("aka '" + currentTvHighlight.getOriginalTitle() + "'");
             holder.originalTitle.setVisibility(View.VISIBLE);
         }
