@@ -1,8 +1,10 @@
 package example.cineclubtvhighlightsjson.entities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.widget.ImageView;
 
-import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -15,10 +17,12 @@ import example.cineclubtvhighlightsjson.functional.DownloadImageTask;
 
 /**
  * Created by mlu on 05.05.2017.
+ * Parcelable: http://kaiheinz.de/2014/07/implement-parcelable-android/
  */
 
-public class TvHighlight {
+public class TvHighlight implements Parcelable {
     private static Map<String,Integer> tvChannelIcons = new HashMap<>();
+    private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
     static{
         tvChannelIcons.put("3 Sat", R.drawable.ic_channel_3sat );
@@ -87,6 +91,37 @@ public class TvHighlight {
     private String ratingInPercentage;
     private String description;
 
+    public TvHighlight() {
+    }
+
+    protected TvHighlight(Parcel in) {
+        dateTime = in.readString();
+        tvChannel = in.readString();
+        title = in.readString();
+        originalTitle = in.readString();
+        startDate = in.readString();
+        startTyp = in.readString();
+        advertisingInMinutes = in.readInt();
+        link = in.readString();
+        imageLink = in.readString();
+        genre1 = in.readString();
+        genre2 = in.readString();
+        ratingInPercentage = in.readString();
+        description = in.readString();
+    }
+
+    public static final Creator<TvHighlight> CREATOR = new Creator<TvHighlight>() {
+        @Override
+        public TvHighlight createFromParcel(Parcel in) {
+            return new TvHighlight(in);
+        }
+
+        @Override
+        public TvHighlight[] newArray(int size) {
+            return new TvHighlight[size];
+        }
+    };
+
     public Calendar getDateTime() {
         Date date = DateTimeHelper.parseJSONDateTime(dateTime);
         Calendar cal = GregorianCalendar.getInstance();
@@ -94,14 +129,27 @@ public class TvHighlight {
         return cal;
     }
 
-    public String getTitle() throws UnsupportedEncodingException {
-        byte spbyte[] = title.getBytes("UTF-16");
-        return new String( spbyte,"UTF-16");
-//        return title;
+    public String getDateTimeString() {
+        return timeFormat.format( getDateTime().getTime() );
     }
 
-    public String getOriginalTitle() {
-        return originalTitle;
+    public String getTitle(){
+        String titleSuffix = "";
+        Calendar releaseYearCalendar = getReleaseYear();
+            if( releaseYearCalendar != null ){
+                int releaseYear = getReleaseYear().get( Calendar.YEAR );
+                titleSuffix = " (" + releaseYear + ")";
+            }
+        return title + titleSuffix;
+    }
+
+    public String getOriginalTitleToBeDisplayed() {
+        String originalTitleToBeDisplayed = "";
+        if(    ! originalTitle.isEmpty()
+            && ! originalTitle.equals(title) ) {
+            originalTitleToBeDisplayed = "aka '" + originalTitle + "'";
+        }
+        return originalTitleToBeDisplayed;
     }
 
     public int getTvChannelIcon() {
@@ -125,8 +173,17 @@ public class TvHighlight {
         }
     }
 
-    public int getAdvertisingInMinutes() {
-        return advertisingInMinutes;
+    public String getAdvertisingInMinutesText() {
+        StringBuilder advertisingInMinutesTextBuilder = new StringBuilder();
+        if( advertisingInMinutes > 0 ){
+            advertisingInMinutesTextBuilder.append(advertisingInMinutes);
+            advertisingInMinutesTextBuilder.append(" Min. ");
+        }
+        else{
+            advertisingInMinutesTextBuilder.append("Keine ");
+        }
+        advertisingInMinutesTextBuilder.append("Werbung");
+        return advertisingInMinutesTextBuilder.toString();
     }
 
     public void setCoverImage(ImageView imageView){
@@ -154,21 +211,24 @@ public class TvHighlight {
     }
 
     @Override
-    public String toString() {
-        return "TvHighlight{" +
-                "dateTime='" + dateTime + '\'' +
-                ", tvChannel='" + tvChannel + '\'' +
-                ", title='" + title + '\'' +
-                ", originalTitle='" + originalTitle + '\'' +
-                ", startDate='" + startDate + '\'' +
-                ", startTyp='" + startTyp + '\'' +
-                ", advertisingInMinutes=" + advertisingInMinutes +
-                ", link='" + link + '\'' +
-                ", imageLink='" + imageLink + '\'' +
-                ", genre1='" + genre1 + '\'' +
-                ", genre2='" + genre2 + '\'' +
-                ", ratingInPercentage='" + ratingInPercentage + '\'' +
-                ", description='" + description + '\'' +
-                '}';
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(dateTime);
+        dest.writeString(tvChannel);
+        dest.writeString(title);
+        dest.writeString(originalTitle);
+        dest.writeString(startDate);
+        dest.writeString(startTyp);
+        dest.writeInt(advertisingInMinutes);
+        dest.writeString(link);
+        dest.writeString(imageLink);
+        dest.writeString(genre1);
+        dest.writeString(genre2);
+        dest.writeString(ratingInPercentage);
+        dest.writeString(description);
     }
 }

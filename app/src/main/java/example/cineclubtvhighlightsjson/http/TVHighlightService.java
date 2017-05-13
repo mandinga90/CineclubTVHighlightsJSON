@@ -10,8 +10,8 @@ import retrofit2.http.Headers;
 public interface TVHighlightService {
 
     @Headers({
-            "Content-Type: application/json;charset=utf-8",
-            "Accept: application/json"
+        "Content-Type: application/json;charset=utf-8",
+        "Accept: application/json"
     })
 
     @GET("/rss/tv.json")

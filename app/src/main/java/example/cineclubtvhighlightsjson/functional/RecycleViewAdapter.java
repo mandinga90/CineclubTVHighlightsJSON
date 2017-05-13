@@ -1,5 +1,7 @@
 package example.cineclubtvhighlightsjson.functional;
 
+import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,13 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.UnsupportedEncodingException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
 import example.cineclubtvhighlightsjson.R;
+import example.cineclubtvhighlightsjson.activities.DetailsActivity;
 import example.cineclubtvhighlightsjson.entities.TvHighlight;
 
 /**
@@ -25,26 +25,45 @@ import example.cineclubtvhighlightsjson.entities.TvHighlight;
 
 public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.ViewHolder>{
     private List<TvHighlight> tvHighlights = new LinkedList<>();
-    private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView title;
         public TextView originalTitle;
         public TextView time;
         public ImageView tvChannelIcon;
         public TextView advertisingInMinutes;
         public ImageView cover;
+        private TvHighlight tvHighlight;
+
         public ViewHolder(View v) {
             super(v);
-            title = (TextView) v.findViewById(R.id.tv_highlight_title);
-            originalTitle = (TextView) v.findViewById(R.id.tv_highlight_original_title);
-            time = (TextView) v.findViewById(R.id.tv_highlight_time);
-            tvChannelIcon = (ImageView) v.findViewById(R.id.tv_highlight_channel_icon);
-            advertisingInMinutes = (TextView) v.findViewById(R.id.tv_highlight_advertising_in_minutes);
-            cover = (ImageView) v.findViewById(R.id.tv_highlight_cover);
+            setupViews(v);
+            v.setOnClickListener(this);
+        }
+
+        private void setupViews(View v) {
+            title = (TextView) v.findViewById(R.id.tv_highlight_details_title);
+            originalTitle = (TextView) v.findViewById(R.id.tv_highlight_details_original_title);
+            time = (TextView) v.findViewById(R.id.tv_highlight_details_time);
+            tvChannelIcon = (ImageView) v.findViewById(R.id.tv_highlight_details_channel_icon);
+            advertisingInMinutes = (TextView) v.findViewById(R.id.tv_highlight_details_advertising_in_minutes);
+            cover = (ImageView) v.findViewById(R.id.tv_highlight_details_cover);
+        }
+
+        @Override
+        public void onClick(View v) {
+
+            Intent intent = new Intent(v.getContext(), DetailsActivity.class);
+            intent.putExtra(v.getContext().getString(R.string.parcelableExtra), tvHighlight);
+            ContextCompat.startActivity(v.getContext(), intent, null);
+
+        }
+
+        public void setTvHighlight(TvHighlight tvHighlight) {
+            this.tvHighlight = tvHighlight;
         }
     }
 
@@ -64,10 +83,10 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     public RecycleViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
                                                    int viewType) {
         // create a new view
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.constraint_tv_highlight_list, parent, false);
+        View listItemView = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.tv_highlight_list_item, parent, false);
 
-        ViewHolder vh = new ViewHolder(v);
+        ViewHolder vh = new ViewHolder(listItemView);
         return vh;
     }
 
@@ -77,27 +96,14 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         TvHighlight currentTvHighlight = tvHighlights.get(position);
+        holder.setTvHighlight( currentTvHighlight );
 
-        // title
-        String title = "";
-        try {
-            title = currentTvHighlight.getTitle();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        // release year
-        String titleSuffix = "";
-        if( currentTvHighlight.getReleaseYear() != null ){
-            int releaseYear = currentTvHighlight.getReleaseYear().get( Calendar.YEAR );
-            titleSuffix = " (" + releaseYear + ")";
-        }
-        holder.title.setText( title + titleSuffix );
+        holder.title.setText( currentTvHighlight.getTitle() );
 
         // original title
-        if(    ! currentTvHighlight.getOriginalTitle().isEmpty()
-            && ! currentTvHighlight.getOriginalTitle().equals(title) ){
-            holder.originalTitle.setText("aka '" + currentTvHighlight.getOriginalTitle() + "'");
+        String originalTitleToBeDisplayed = currentTvHighlight.getOriginalTitleToBeDisplayed();
+        if( ! originalTitleToBeDisplayed.isEmpty() ){
+            holder.originalTitle.setText(originalTitleToBeDisplayed);
             holder.originalTitle.setVisibility(View.VISIBLE);
         }
         else{
@@ -105,8 +111,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         }
 
         // dateTime
-        Calendar dateTime = currentTvHighlight.getDateTime();
-        holder.time.setText( timeFormat.format( dateTime.getTime() ) );
+        holder.time.setText( currentTvHighlight.getDateTimeString() );
 
         // tv channel icon
         int tvChannelIcon = currentTvHighlight.getTvChannelIcon();
@@ -115,17 +120,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         }
 
         // advertising in minutes
-        int advertisingInMinutes = currentTvHighlight.getAdvertisingInMinutes();
-        StringBuilder advertisingInMinutesTextBuilder = new StringBuilder();
-        if( advertisingInMinutes > 0 ){
-            advertisingInMinutesTextBuilder.append(advertisingInMinutes);
-            advertisingInMinutesTextBuilder.append(" Min. ");
-        }
-        else{
-            advertisingInMinutesTextBuilder.append("Keine ");
-        }
-        advertisingInMinutesTextBuilder.append("Werbung");
-        holder.advertisingInMinutes.setText(advertisingInMinutesTextBuilder.toString());
+        holder.advertisingInMinutes.setText(currentTvHighlight.getAdvertisingInMinutesText());
 
         // cover
         currentTvHighlight.setCoverImage(holder.cover);
