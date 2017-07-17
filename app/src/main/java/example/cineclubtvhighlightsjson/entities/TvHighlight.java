@@ -2,6 +2,8 @@ package example.cineclubtvhighlightsjson.entities;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.Html;
+import android.text.Spanned;
 import android.widget.ImageView;
 
 import java.text.SimpleDateFormat;
@@ -14,6 +16,8 @@ import java.util.Map;
 import example.cineclubtvhighlightsjson.R;
 import example.cineclubtvhighlightsjson.functional.DateTimeHelper;
 import example.cineclubtvhighlightsjson.functional.DownloadImageTask;
+
+import static example.cineclubtvhighlightsjson.functional.HtmlHelper.replaceHtmlCharacters;
 
 /**
  * Created by mlu on 05.05.2017.
@@ -140,7 +144,7 @@ public class TvHighlight implements Parcelable {
                 int releaseYear = getReleaseYear().get( Calendar.YEAR );
                 titleSuffix = " (" + releaseYear + ")";
             }
-        return title + titleSuffix;
+        return replaceHtmlCharacters( title ) + titleSuffix;
     }
 
     public String getOriginalTitleToBeDisplayed() {
@@ -149,7 +153,7 @@ public class TvHighlight implements Parcelable {
             && ! originalTitle.equals(title) ) {
             originalTitleToBeDisplayed = "aka '" + originalTitle + "'";
         }
-        return originalTitleToBeDisplayed;
+        return replaceHtmlCharacters( originalTitleToBeDisplayed );
     }
 
     public int getTvChannelIcon() {
@@ -159,6 +163,10 @@ public class TvHighlight implements Parcelable {
         else{
             return 0;
         }
+    }
+
+    public String getTvChannelName() {
+        return tvChannel;
     }
 
     public Calendar getReleaseYear(){
@@ -178,6 +186,7 @@ public class TvHighlight implements Parcelable {
         if( advertisingInMinutes > 0 ){
             advertisingInMinutesTextBuilder.append(advertisingInMinutes);
             advertisingInMinutesTextBuilder.append(" Min. ");
+
         }
         else{
             advertisingInMinutesTextBuilder.append("Keine ");
@@ -190,8 +199,9 @@ public class TvHighlight implements Parcelable {
         new DownloadImageTask(imageView).execute(imageLink);
     }
 
-    public String getLink() {
-        return link;
+    public Spanned getLink() {
+        String link = "<a href='" + this.link + "'>Link zur Kritik</a>";
+        return Html.fromHtml( link );
     }
 
     public String getGenre1() {
@@ -207,7 +217,7 @@ public class TvHighlight implements Parcelable {
     }
 
     public String getDescription() {
-        return description;
+        return replaceHtmlCharacters( description );
     }
 
     @Override

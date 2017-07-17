@@ -33,7 +33,8 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         public TextView title;
         public TextView originalTitle;
         public TextView time;
-        public ImageView tvChannelIcon;
+//        public ImageView tvChannelIcon;
+        public TextView tvChannelName;
         public TextView advertisingInMinutes;
         public ImageView cover;
         private TvHighlight tvHighlight;
@@ -48,9 +49,10 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
             title = (TextView) v.findViewById(R.id.tv_highlight_details_title);
             originalTitle = (TextView) v.findViewById(R.id.tv_highlight_details_original_title);
             time = (TextView) v.findViewById(R.id.tv_highlight_details_time);
-            tvChannelIcon = (ImageView) v.findViewById(R.id.tv_highlight_details_channel_icon);
+            //tvChannelIcon = (ImageView) v.findViewById(R.id.tv_highlight_details_channel_icon);
+            tvChannelName = (TextView) v.findViewById(R.id.tv_highlight_details_channel_icon);
             advertisingInMinutes = (TextView) v.findViewById(R.id.tv_highlight_details_advertising_in_minutes);
-            cover = (ImageView) v.findViewById(R.id.tv_highlight_details_cover);
+            //cover = (ImageView) v.findViewById(R.id.tv_highlight_details_cover);
         }
 
         @Override
@@ -114,16 +116,17 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         holder.time.setText( currentTvHighlight.getDateTimeString() );
 
         // tv channel icon
-        int tvChannelIcon = currentTvHighlight.getTvChannelIcon();
-        if( tvChannelIcon > 0 ){
-            holder.tvChannelIcon.setImageResource(tvChannelIcon);
-        }
+//        int tvChannelIcon = currentTvHighlight.getTvChannelIcon();
+//        if( tvChannelIcon > 0 ){
+//            holder.tvChannelIcon.setImageResource(tvChannelIcon);
+//        }
+        holder.tvChannelName.setText(currentTvHighlight.getTvChannelName());
 
         // advertising in minutes
         holder.advertisingInMinutes.setText(currentTvHighlight.getAdvertisingInMinutesText());
 
         // cover
-        currentTvHighlight.setCoverImage(holder.cover);
+        //currentTvHighlight.setCoverImage(holder.cover);
 
     }
 
