@@ -54,7 +54,7 @@ public class RetainFragment extends Fragment {
     }
 
     private void showNetError(String errorMessage){
-        Toast.makeText(getActivity(), "Network error!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Kein Internetzugriff möglich!", Toast.LENGTH_SHORT).show();
         Log.d("NetworkError", errorMessage);
     }
 

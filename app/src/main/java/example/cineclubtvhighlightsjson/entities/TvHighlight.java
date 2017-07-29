@@ -128,8 +128,7 @@ public class TvHighlight implements Parcelable {
 
     public Calendar getDateTime() {
         Date date = DateTimeHelper.parseJSONDateTime(dateTime);
-        Calendar cal = GregorianCalendar.getInstance();
-        cal.setTimeZone(TimeZone.getTimeZone("GMT+2"));
+        Calendar cal = GregorianCalendar.getInstance(TimeZone.getTimeZone("GMT+2"));
         cal.setTime(date);
         return cal;
     }

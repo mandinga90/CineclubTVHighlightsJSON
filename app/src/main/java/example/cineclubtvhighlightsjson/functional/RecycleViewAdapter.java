@@ -71,8 +71,7 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
     public RecycleViewAdapter(List<TvHighlight> tvHighlights) {
         for(int i = 0; i < tvHighlights.size(); i++){
             TvHighlight currentTvHighlight = tvHighlights.get(i);
-            boolean condition = DateTimeHelper.isToday(currentTvHighlight.getDateTime());
-            if(condition){
+            if(DateTimeHelper.isToday(currentTvHighlight.getDateTime())){
                 this.tvHighlights.add(currentTvHighlight);
             }
         }

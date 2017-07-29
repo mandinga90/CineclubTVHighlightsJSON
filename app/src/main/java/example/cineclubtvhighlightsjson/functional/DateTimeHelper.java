@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 /**
  * Created by mlu on 06.05.2017.
@@ -34,7 +35,7 @@ public class DateTimeHelper {
         }
     }
     public static boolean isToday(Calendar date){
-        Calendar today = GregorianCalendar.getInstance();
+        Calendar today = GregorianCalendar.getInstance(TimeZone.getTimeZone("GMT+2"));
         return (    date.get( Calendar.YEAR ) == today.get( Calendar.YEAR )
                  && date.get( Calendar.MONTH ) == today.get( Calendar.MONTH )
                  && date.get( Calendar.DAY_OF_MONTH ) == today.get( Calendar.DAY_OF_MONTH ) );
