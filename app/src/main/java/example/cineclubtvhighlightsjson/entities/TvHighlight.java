@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 import example.cineclubtvhighlightsjson.R;
 import example.cineclubtvhighlightsjson.functional.DateTimeHelper;
@@ -40,6 +41,7 @@ public class TvHighlight implements Parcelable {
         tvChannelIcons.put("HR", R.drawable.ic_channel_hr );
         tvChannelIcons.put("Kabel 1", R.drawable.ic_channel_kabel_eins );
         tvChannelIcons.put("KiKa", R.drawable.ic_channel_kika );
+        tvChannelIcons.put("Kika", R.drawable.ic_channel_kika );
         tvChannelIcons.put("MDR", R.drawable.ic_channel_mdr );
         tvChannelIcons.put("NDR", R.drawable.ic_channel_ndr );
         tvChannelIcons.put("Nick", R.drawable.ic_channel_nickelodeon );
@@ -127,6 +129,7 @@ public class TvHighlight implements Parcelable {
     public Calendar getDateTime() {
         Date date = DateTimeHelper.parseJSONDateTime(dateTime);
         Calendar cal = GregorianCalendar.getInstance();
+        cal.setTimeZone(TimeZone.getTimeZone("GMT+2"));
         cal.setTime(date);
         return cal;
     }

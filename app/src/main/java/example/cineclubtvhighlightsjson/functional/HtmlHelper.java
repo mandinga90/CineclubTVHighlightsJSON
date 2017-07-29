@@ -3,10 +3,6 @@ package example.cineclubtvhighlightsjson.functional;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by mlu on 18.06.2017.
- */
-
 public class HtmlHelper {
     private static Map<String,String> HTML_CHARACTERS = new HashMap<>();
 
@@ -18,7 +14,6 @@ public class HtmlHelper {
         HTML_CHARACTERS.put( "&Ouml;", "Ö" );
         HTML_CHARACTERS.put( "&Uuml;", "Ü" );
         HTML_CHARACTERS.put( "&szlig;", "ß" );
-//        HTML_CHARACTERS.put( "\"", "\"" );
     }
 
     public static String replaceHtmlCharacters( String s ){
