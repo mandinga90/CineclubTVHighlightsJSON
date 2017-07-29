@@ -15,6 +15,8 @@ import example.cineclubtvhighlightsjson.R;
 import example.cineclubtvhighlightsjson.functional.DateTimeHelper;
 import example.cineclubtvhighlightsjson.functional.DownloadImageTask;
 
+import static example.cineclubtvhighlightsjson.functional.HtmlHelper.replaceHtmlCharacters;
+
 /**
  * Created by mlu on 05.05.2017.
  * Parcelable: http://kaiheinz.de/2014/07/implement-parcelable-android/
@@ -140,7 +142,7 @@ public class TvHighlight implements Parcelable {
                 int releaseYear = getReleaseYear().get( Calendar.YEAR );
                 titleSuffix = " (" + releaseYear + ")";
             }
-        return title + titleSuffix;
+        return replaceHtmlCharacters(title + titleSuffix);
     }
 
     public String getOriginalTitleToBeDisplayed() {
@@ -149,7 +151,7 @@ public class TvHighlight implements Parcelable {
             && ! originalTitle.equals(title) ) {
             originalTitleToBeDisplayed = "aka '" + originalTitle + "'";
         }
-        return originalTitleToBeDisplayed;
+        return replaceHtmlCharacters(originalTitleToBeDisplayed);
     }
 
     public int getTvChannelIcon() {
@@ -207,7 +209,7 @@ public class TvHighlight implements Parcelable {
     }
 
     public String getDescription() {
-        return description;
+        return replaceHtmlCharacters(description);
     }
 
     @Override

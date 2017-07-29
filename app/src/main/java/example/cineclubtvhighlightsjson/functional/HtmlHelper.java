@@ -7,7 +7,7 @@ import java.util.Map;
  * Created by mlu on 18.06.2017.
  */
 
-class HtmlHelper {
+public class HtmlHelper {
     private static Map<String,String> HTML_CHARACTERS = new HashMap<>();
 
     static{
