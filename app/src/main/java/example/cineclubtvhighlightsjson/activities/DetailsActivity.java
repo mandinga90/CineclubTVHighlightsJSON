@@ -3,6 +3,8 @@ package example.cineclubtvhighlightsjson.activities;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.LinkMovementMethod;
+import android.text.method.ScrollingMovementMethod;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -37,6 +39,13 @@ public class DetailsActivity extends AppCompatActivity {
 
         // advertising in minutes
         binding.tvHighlightDetailsAdvertisingInMinutes.setText(tvHighlightForDetails.getAdvertisingInMinutesText());
+
+        // description
+        binding.tvHighlightDetailsDescription.setMovementMethod(new ScrollingMovementMethod());
+
+        // link
+        binding.tvHighlightDetailsLink.setLinksClickable(true);
+        binding.tvHighlightDetailsLink.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     @Override
