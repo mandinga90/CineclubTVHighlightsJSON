@@ -2,6 +2,8 @@ package example.cineclubtvhighlightsjson.entities;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.Html;
+import android.text.Spanned;
 import android.widget.ImageView;
 
 import java.text.SimpleDateFormat;
@@ -127,7 +129,7 @@ public class TvHighlight implements Parcelable {
 
     public Calendar getDateTime() {
         Date date = DateTimeHelper.parseJSONDateTime(dateTime);
-        Calendar cal = GregorianCalendar.getInstance();
+        Calendar cal = GregorianCalendar.getInstance(/*TimeZone.getTimeZone("GMT+2")*/);
         cal.setTime(date);
         return cal;
     }
@@ -143,7 +145,7 @@ public class TvHighlight implements Parcelable {
                 int releaseYear = getReleaseYear().get( Calendar.YEAR );
                 titleSuffix = " (" + releaseYear + ")";
             }
-        return replaceHtmlCharacters(title + titleSuffix);
+        return replaceHtmlCharacters(title) + titleSuffix;
     }
 
     public String getOriginalTitleToBeDisplayed() {
@@ -193,8 +195,9 @@ public class TvHighlight implements Parcelable {
         new DownloadImageTask(imageView).execute(imageLink);
     }
 
-    public String getLink() {
-        return link;
+    public Spanned getLink() {
+        String link = "<a href='" + this.link + "'>Link zur Kritik</a>";
+        return Html.fromHtml( link );
     }
 
     public String getGenre1() {

@@ -13,10 +13,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/border"
-        android:fadeScrollbars="false"
-        android:scrollbars="vertical">
-
+        android:background="@drawable/border">
 
         <ImageView
             android:id="@+id/tv_highlight_details_cover"
@@ -115,6 +112,8 @@
             android:layout_marginRight="16dp"
             android:text="@{tvHighlight.description}"
             android:textSize="24sp"
+            android:fadeScrollbars="false"
+            android:scrollbars="vertical"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginTop="8dp"

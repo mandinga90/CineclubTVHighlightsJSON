@@ -21,10 +21,10 @@ public class DateTimeHelper {
     public static Date parseJSONDateTime(String dateString) {
         if (dateString == null) return null;
         DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ssZ");
-        fmt.setTimeZone(TimeZone.getTimeZone("GMT+2"));
+//        fmt.setTimeZone(TimeZone.getTimeZone("GMT+2"));
         if (dateString.contains("T")) dateString = dateString.replace('T', ' ');
         if (dateString.contains("Z")) dateString = dateString.replace(".000", "");
-        if (dateString.contains("Z")) dateString = dateString.replace("Z", "+0000");
+        if (dateString.contains("Z")) dateString = dateString.replace("Z", "+0200");
         else
             dateString = dateString.substring(0, dateString.lastIndexOf(':')) + dateString.substring(dateString.lastIndexOf(':')+1);
         try {
