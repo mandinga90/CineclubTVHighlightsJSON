@@ -62,4 +62,5 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
 
     }
+
 }

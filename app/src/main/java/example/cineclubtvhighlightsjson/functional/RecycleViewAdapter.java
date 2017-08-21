@@ -45,12 +45,12 @@ public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.
         }
 
         private void setupViews(View v) {
-            title = (TextView) v.findViewById(R.id.tv_highlight_details_title);
-            originalTitle = (TextView) v.findViewById(R.id.tv_highlight_details_original_title);
-            time = (TextView) v.findViewById(R.id.tv_highlight_details_time);
-            tvChannelIcon = (ImageView) v.findViewById(R.id.tv_highlight_details_channel_icon);
-            advertisingInMinutes = (TextView) v.findViewById(R.id.tv_highlight_details_advertising_in_minutes);
-            cover = (ImageView) v.findViewById(R.id.tv_highlight_details_cover);
+            title = (TextView) v.findViewById(R.id.tv_highlight_title);
+            originalTitle = (TextView) v.findViewById(R.id.tv_highlight_original_title);
+            time = (TextView) v.findViewById(R.id.tv_highlight_time);
+            tvChannelIcon = (ImageView) v.findViewById(R.id.tv_highlight_channel_icon);
+            advertisingInMinutes = (TextView) v.findViewById(R.id.tv_highlight_advertising_in_minutes);
+            cover = (ImageView) v.findViewById(R.id.tv_highlight_cover);
         }
 
         @Override
